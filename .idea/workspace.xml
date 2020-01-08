@@ -14,6 +14,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1W5OeTLUtiCWmxhfck0a7vQjaw0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -56,6 +59,8 @@
       <workItem from="1578436084506" duration="122000" />
       <workItem from="1578436224192" duration="21144000" />
       <workItem from="1578466593611" duration="154000" />
+      <workItem from="1578495122656" duration="2547000" />
+      <workItem from="1578515974507" duration="2117000" />
     </task>
     <servers />
   </component>
@@ -67,6 +72,10 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="872" y="179" key="#Inspections/0.0.2560.1040@0.0.2560.1040" timestamp="1578442378700" />
+    <state x="872" y="179" key="#Notifications" timestamp="1578496198175">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="872" y="179" key="#Notifications/0.0.2560.1040@0.0.2560.1040" timestamp="1578496198175" />
     <state x="781" y="163" key="SettingsEditor" timestamp="1578442566706">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>

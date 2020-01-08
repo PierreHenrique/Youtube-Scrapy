@@ -21,6 +21,10 @@ class YoutubeVideoItem(scrapy.Item):
         input_processor=MapCompose(remove_tags),
         output_processor=TakeFirst()
     )
+    date = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    )
     title = scrapy.Field(
         input_processor=MapCompose(remove_tags),
         output_processor=TakeFirst()
