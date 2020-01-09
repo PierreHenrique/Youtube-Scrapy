@@ -16,6 +16,33 @@ class YoutubeItem(scrapy.Item):
     videos = scrapy.Field()
     pass
 
+class YoutubeCommentItem(scrapy.Item):
+    url = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    )
+    name = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    )
+    picture = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    )
+    content = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    )
+    likes = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    )
+    dislikes = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    )
+    pass
+
 class YoutubeVideoItem(scrapy.Item):
     url = scrapy.Field(
         input_processor=MapCompose(remove_tags),
@@ -40,5 +67,8 @@ class YoutubeVideoItem(scrapy.Item):
     dislikes = scrapy.Field(
         input_processor=MapCompose(remove_tags),
         output_processor=TakeFirst()
+    )
+    comments = scrapy.Field(
+        output_processor=Identity()
     )
     pass

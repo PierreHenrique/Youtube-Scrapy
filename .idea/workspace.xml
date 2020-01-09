@@ -32,7 +32,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -61,6 +61,7 @@
       <workItem from="1578466593611" duration="154000" />
       <workItem from="1578495122656" duration="2547000" />
       <workItem from="1578515974507" duration="2117000" />
+      <workItem from="1578531776278" duration="9000000" />
     </task>
     <servers />
   </component>
@@ -72,14 +73,14 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="872" y="179" key="#Inspections/0.0.2560.1040@0.0.2560.1040" timestamp="1578442378700" />
-    <state x="872" y="179" key="#Notifications" timestamp="1578496198175">
+    <state x="872" y="179" key="#Notifications" timestamp="1578520196236">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="872" y="179" key="#Notifications/0.0.2560.1040@0.0.2560.1040" timestamp="1578496198175" />
-    <state x="781" y="163" key="SettingsEditor" timestamp="1578442566706">
+    <state x="872" y="179" key="#Notifications/0.0.2560.1040@0.0.2560.1040" timestamp="1578520196236" />
+    <state x="781" y="163" key="SettingsEditor" timestamp="1578520213961">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="781" y="163" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1578442566706" />
+    <state x="781" y="163" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1578520213961" />
     <state x="943" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1578447582165">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
