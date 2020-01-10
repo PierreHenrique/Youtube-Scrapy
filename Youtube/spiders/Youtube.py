@@ -9,17 +9,26 @@ from Youtube.items import YoutubeItem
 class YoutubeSpider(CrawlSpider):
     name = 'Youtube'
 
-    script1 = """
+    script1 = """        
         function main(splash)
-            assert(splash:go(splash.args.url))
+            local num_scrolls = 30
+                
             splash.http2_enabled = true
-            splash:wait(splash.args.wait)
+            splash.images_enabled  = true
+            splash.html5_media_enabled = true
+            assert(splash:go(splash.args.url))
+            splash:wait(3.0)
+            for _ = 1, num_scrolls do
+                splash:runjs("window.scrollTo(0, 999999999);")
+                splash:wait(0.4)
+            end
+            print("Finished")
             return {html=splash:html()}
         end
         """
 
     def start_requests(self):
-        yield SplashRequest('https://www.youtube.com/user/ElectronicDesireGE/videos', self.parse, endpoint='execute', args={'har': 1,'html': 1,'lua_source': self.script1,'wait': 0.2})
+        yield SplashRequest('https://www.youtube.com/user/ElectronicDesireGE/videos', self.parse, endpoint='execute', args={'har': 1,'html': 1,'lua_source': self.script1})
 
     def parse(self, response):
         #print(response.body);

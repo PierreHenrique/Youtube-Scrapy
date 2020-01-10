@@ -13,24 +13,17 @@ class YoutubeVideoSpider(CrawlSpider):
     urls = ['https://www.youtube.com/watch?v=qugygyTz-qo']
 
     script1 = """
-        function scroll_to(splash, x, y)
-          local js = string.format(
-            "window.scrollTo(%s, %s); print(y);", tonumber(x), tonumber(y)
-          )
-          print(y)
-          return splash:runjs(js)
-        end
-        
         function main(splash)
             local num_scrolls = 20
 
             splash.http2_enabled = true
-            splash.images_enabled  = false
-            splash.html5_media_enabled = false
+            splash.images_enabled  = true
+            splash.html5_media_enabled = true
             assert(splash:go(splash.args.url))
+            splash:wait(3.0)
             for _ = 1, num_scrolls do
-                scroll_to(splash, 0, 999999999999)
-                splash:wait(2.0)
+                splash:runjs("window.scrollTo(0, 999999999);")
+                splash:wait(2.6)
             end
             print("Finished")
             return {html=splash:html()}
@@ -71,6 +64,10 @@ class YoutubeVideoSpider(CrawlSpider):
         video.add_value('date', response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[1]/div[2]/yt-formatted-string/text()').get())
         video.add_value('title', response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/h1/yt-formatted-string/text()').get())
         video.add_value('views', response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[1]/div[1]/yt-view-count-renderer/span[1]/text()').get())
+
+        if info is None:
+            info = {["0"], ["0"]}
+
         video.add_value('likes', info[0].strip())
         video.add_value('dislikes', info[1].strip())
 
@@ -80,7 +77,7 @@ class YoutubeVideoSpider(CrawlSpider):
             url = s.xpath('//*[@id="author-text"]/@href').get()
             item.add_value('url', f'https://www.youtube.com{url}')
             item.add_value('name', self.clean(s.xpath('//*[@id="author-text"]/span/text()').get()))
-            item.add_value('picture', s.xpath('//*[@id="img" and @class="style-scope yt-img-shadow"]/@src').get())
+            item.add_value('picture', s.xpath('//img[@id="img"]/@src').get())
             item.add_value('content', s.xpath('//*[@id="content-text"]/text()').get())
             item.add_value('likes', self.clean(s.xpath('//*[@id="vote-count-middle"]/text()').get()))
             item.add_value('dislikes', '0')
