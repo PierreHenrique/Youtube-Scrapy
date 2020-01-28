@@ -3,34 +3,18 @@ import scrapy
 from scrapy.loader import ItemLoader
 from scrapy.spiders import CrawlSpider
 from scrapy_splash import SplashRequest
+
+from Youtube.SeleniumRequest import SeleniumRequest
 from Youtube.items import YoutubeItem
 
 
 class YoutubeSpider(CrawlSpider):
     name = 'Youtube'
 
-    script1 = """        
-        function main(splash)
-            local num_scrolls = 30
-                
-            splash.http2_enabled = true
-            splash.images_enabled  = true
-            splash.html5_media_enabled = true
-            assert(splash:go(splash.args.url))
-            splash:wait(3.0)
-            for _ = 1, num_scrolls do
-                splash:runjs("window.scrollTo(0, 999999999);")
-                splash:wait(0.4)
-            end
-            print("Finished")
-            return {html=splash:html()}
-        end
-        """
-
     def start_requests(self):
-        yield SplashRequest('https://www.youtube.com/user/ElectronicDesireGE/videos', self.parse, endpoint='execute', args={'har': 1,'html': 1,'lua_source': self.script1})
+        yield SeleniumRequest(url='https://www.youtube.com/user/ElectronicDesireGE/videos', callback=self.parse_item, endless_scrolling='//ytd-grid-video-renderer[@class="style-scope ytd-grid-renderer"]')
 
-    def parse(self, response):
+    def parse_item(self, response):
         #print(response.body);
         videos = response.xpath('//*[@id="video-title"]/@href').getall()
         youtube = ItemLoader(item=YoutubeItem(), response=response)

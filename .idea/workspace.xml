@@ -26,6 +26,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmdline.py" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -33,6 +34,35 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Github\Youtube-Scrapy" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="cmdline" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Youtube-Scrapy" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Konami\miniconda3\envs\Youtube-Scrapy\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cmdline.py" />
+      <option name="PARAMETERS" value="crawl YoutubeVideo -o YoutubeVideo.json" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -63,7 +93,15 @@
       <workItem from="1578515974507" duration="2117000" />
       <workItem from="1578531776278" duration="9000000" />
       <workItem from="1578676037830" duration="4709000" />
-      <workItem from="1578681660338" duration="2317000" />
+      <workItem from="1578681660338" duration="2581000" />
+      <workItem from="1578925823835" duration="1700000" />
+      <workItem from="1580134281302" duration="13340000" />
+      <workItem from="1580149009748" duration="272000" />
+      <workItem from="1580149317863" duration="152000" />
+      <workItem from="1580149484702" duration="849000" />
+      <workItem from="1580150344218" duration="4910000" />
+      <workItem from="1580156159952" duration="369000" />
+      <workItem from="1580215686982" duration="1904000" />
     </task>
     <servers />
   </component>
@@ -79,13 +117,56 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="872" y="179" key="#Notifications/0.0.2560.1040@0.0.2560.1040" timestamp="1578520196236" />
+    <state x="734" y="176" width="1092" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580152335459">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="734" y="176" width="1092" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1580152335459" />
+    <state x="1067" y="313" key="FileChooserDialogImpl" timestamp="1580152283898">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1067" y="313" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1580152283898" />
+    <state width="2517" height="348" key="GridCell.Tab.0.bottom" timestamp="1580155275970">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="348" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1580155275970" />
+    <state width="2517" height="348" key="GridCell.Tab.0.center" timestamp="1580155275969">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="348" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1580155275969" />
+    <state width="2517" height="348" key="GridCell.Tab.0.left" timestamp="1580155275969">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="348" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1580155275969" />
+    <state width="2517" height="348" key="GridCell.Tab.0.right" timestamp="1580155275970">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="348" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1580155275970" />
+    <state width="2517" height="348" key="GridCell.Tab.1.bottom" timestamp="1580155275970">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="348" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1580155275970" />
+    <state width="2517" height="348" key="GridCell.Tab.1.center" timestamp="1580155275970">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="348" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1580155275970" />
+    <state width="2517" height="348" key="GridCell.Tab.1.left" timestamp="1580155275970">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="348" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1580155275970" />
+    <state width="2517" height="348" key="GridCell.Tab.1.right" timestamp="1580155275970">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="348" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1580155275970" />
     <state x="781" y="163" key="SettingsEditor" timestamp="1578520213961">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="781" y="163" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1578520213961" />
-    <state x="943" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1578447582165">
+    <state x="943" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1580145542335">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="943" y="225" width="672" height="678" key="search.everywhere.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1578447582165" />
+    <state x="943" y="225" width="672" height="678" key="search.everywhere.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1580145542335" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Youtube_Scrapy$cmdline.coverage" NAME="cmdline Coverage Results" MODIFIED="1580152339800" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

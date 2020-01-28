@@ -4,9 +4,92 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import logging
+import re
+import time
 
 from scrapy import signals
+from scrapy.exceptions import NotConfigured
+from scrapy.http import HtmlResponse
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.wait import WebDriverWait
 
+from Youtube.SeleniumRequest import SeleniumRequest
+
+
+class SeleniumMiddleware:
+    def __init__(self):
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        options.add_argument('window-size=1200x600')
+        options.add_argument("--enable-javascript")
+        options.add_argument("--incognito")
+
+        self.driver = webdriver.Chrome("E:\Github\Youtube-Scrapy\chromedriver.exe", chrome_options=options)
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        middleware = cls()
+
+        crawler.signals.connect(middleware.spider_closed, signals.spider_closed)
+
+        return middleware
+
+    def process_request(self, request, spider):
+
+        if not isinstance(request, SeleniumRequest):
+            return None
+
+        self.driver.get(request.url)
+
+        for cookie_name, cookie_value in request.cookies.items():
+            self.driver.add_cookie(
+                {
+                    'name': cookie_name,
+                    'value': cookie_value
+                }
+            )
+
+        if request.endless_scrolling:
+            html = self.driver.find_element_by_tag_name('html')
+            html.send_keys(Keys.PAGE_DOWN)
+            time.sleep(2)
+
+            self.driver.execute_script('videos = document.querySelectorAll("video"); for(video of videos) {video.pause(); video.controls = true}')
+            self.driver.execute_script('document.getElementById("player").remove();')
+
+            last = -1
+
+            while len(self.driver.find_elements_by_xpath(request.endless_scrolling)) != last:
+                new = self.driver.find_elements_by_xpath(request.endless_scrolling)
+                print(f"{len(new)} {last}")
+
+                self.driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
+                time.sleep(1.6)
+                last = len(new)
+            else:
+                if request.endless_scrolling == '//*[@id="content-text"]':
+                    self.driver.execute_script('buttons = document.getElementsByClassName("more-button-exp style-scope ytd-comment-replies-renderer"); for(button of buttons) {button.click();}');
+                    time.sleep(10)
+
+                print("haha")
+
+
+        body = str.encode(self.driver.page_source)
+
+        request.meta.update({'driver': self.driver})
+
+        return HtmlResponse(
+            self.driver.current_url,
+            body=body,
+            encoding='utf-8',
+            request=request
+        )
+
+    def spider_closed(self):
+        self.driver.quit()
 
 class YoutubeSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,

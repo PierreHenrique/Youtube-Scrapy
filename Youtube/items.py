@@ -12,8 +12,14 @@ from w3lib.html import remove_tags
 
 
 class YoutubeItem(scrapy.Item):
-    author = scrapy.Field()
-    videos = scrapy.Field()
+    author = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    )
+    videos = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    )
     pass
 
 class YoutubeCommentItem(scrapy.Item):
@@ -38,6 +44,10 @@ class YoutubeCommentItem(scrapy.Item):
         output_processor=TakeFirst()
     )
     dislikes = scrapy.Field(
+        input_processor=MapCompose(remove_tags),
+        output_processor=TakeFirst()
+    ),
+    replies = scrapy.Field(
         input_processor=MapCompose(remove_tags),
         output_processor=TakeFirst()
     )

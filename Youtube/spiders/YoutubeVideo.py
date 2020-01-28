@@ -1,34 +1,18 @@
 # -*- coding: utf-8 -*-
+import scrapy
+from scrapy.http import HtmlResponse
 from scrapy.loader import ItemLoader
 from scrapy.spiders import CrawlSpider
 from scrapy_splash import SplashRequest
 from scrapy import Selector
-from Youtube.items import YoutubeVideoItem, YoutubeCommentItem
-import json
-import time
 
+from Youtube.SeleniumRequest import SeleniumRequest
+from Youtube.items import YoutubeVideoItem, YoutubeCommentItem
+from selenium import webdriver
 
 class YoutubeVideoSpider(CrawlSpider):
     name = 'YoutubeVideo'
-    urls = ['https://www.youtube.com/watch?v=qugygyTz-qo']
-
-    script1 = """
-        function main(splash)
-            local num_scrolls = 20
-
-            splash.http2_enabled = true
-            splash.images_enabled  = true
-            splash.html5_media_enabled = true
-            assert(splash:go(splash.args.url))
-            splash:wait(3.0)
-            for _ = 1, num_scrolls do
-                splash:runjs("window.scrollTo(0, 999999999);")
-                splash:wait(2.6)
-            end
-            print("Finished")
-            return {html=splash:html()}
-        end
-        """
+    urls = ['https://www.youtube.com/watch?v=vw40jqnDuLE']
 
     '''
         def __init__(self):
@@ -46,30 +30,31 @@ class YoutubeVideoSpider(CrawlSpider):
         else:
             return ''
 
+
     def start_requests(self):
         for url in self.urls:
-            print('Sending request')
-            yield SplashRequest(url, self.parse, endpoint='execute', args={'har': 1,'html': 1,'lua_source': self.script1,'wait': 2.0, 'timeout': 90}, meta={'original_url': url})
+            yield SeleniumRequest(url=url, callback=self.parse_item, endless_scrolling='//*[@id="content-text"]')
 
-    def parse(self, response):
+    def parse_item(self, response):
         video = ItemLoader(item=YoutubeVideoItem(), response=response)
 
         info = response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[3]/ytd-sentiment-bar-renderer/paper-tooltip/div/text()').get()
-        comments = response.xpath('//*[@id="comment"]').getall()
+        comments = response.xpath('//*[@id="body"]').getall()
 
         if info is not None:
             info = info.split("/")
 
-        video.add_value('url', response.meta['original_url'])
+        video.add_value('url', '')
         video.add_value('date', response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[1]/div[2]/yt-formatted-string/text()').get())
         video.add_value('title', response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/h1/yt-formatted-string/text()').get())
         video.add_value('views', response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[1]/div[1]/yt-view-count-renderer/span[1]/text()').get())
 
         if info is None:
-            info = {["0"], ["0"]}
+            info = []
+            for i in range(0, 2):
+                info.append("0")
 
         video.add_value('likes', info[0].strip())
-        video.add_value('dislikes', info[1].strip())
 
         for comment in comments:
             s = Selector(text=comment)
@@ -77,10 +62,9 @@ class YoutubeVideoSpider(CrawlSpider):
             url = s.xpath('//*[@id="author-text"]/@href').get()
             item.add_value('url', f'https://www.youtube.com{url}')
             item.add_value('name', self.clean(s.xpath('//*[@id="author-text"]/span/text()').get()))
-            item.add_value('picture', s.xpath('//img[@id="img"]/@src').get())
+            item.add_value('picture', s.xpath('//div[@id="author-thumbnail"]/a/yt-img-shadow/img/@src').get())
             item.add_value('content', s.xpath('//*[@id="content-text"]/text()').get())
             item.add_value('likes', self.clean(s.xpath('//*[@id="vote-count-middle"]/text()').get()))
-            item.add_value('dislikes', '0')
 
             video.add_value('comments', item.load_item())
 
