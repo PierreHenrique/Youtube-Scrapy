@@ -3,7 +3,6 @@ import scrapy
 from scrapy.http import HtmlResponse
 from scrapy.loader import ItemLoader
 from scrapy.spiders import CrawlSpider
-from scrapy_splash import SplashRequest
 from scrapy import Selector
 
 from Youtube.SeleniumRequest import SeleniumRequest
@@ -12,7 +11,7 @@ from selenium import webdriver
 
 class YoutubeVideoSpider(CrawlSpider):
     name = 'YoutubeVideo'
-    urls = ['https://www.youtube.com/watch?v=vw40jqnDuLE']
+    urls = ['https://www.youtube.com/watch?v=pcgKc-9X7cE']
 
     '''
         def __init__(self):
@@ -48,6 +47,7 @@ class YoutubeVideoSpider(CrawlSpider):
         video.add_value('date', response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[1]/div[2]/yt-formatted-string/text()').get())
         video.add_value('title', response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/h1/yt-formatted-string/text()').get())
         video.add_value('views', response.xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[1]/div[1]/yt-view-count-renderer/span[1]/text()').get())
+        video.add_value('category', response.xpath('//*[@class="content content-line-height-override style-scope ytd-metadata-row-renderer"]/a/text()').get())
 
         if info is None:
             info = []
@@ -55,12 +55,13 @@ class YoutubeVideoSpider(CrawlSpider):
                 info.append("0")
 
         video.add_value('likes', info[0].strip())
+        video.add_value('dislikes', info[1].strip())
 
         for comment in comments:
             s = Selector(text=comment)
             item = ItemLoader(item=YoutubeCommentItem(), response=response)
-            url = s.xpath('//*[@id="author-text"]/@href').get()
-            item.add_value('url', f'https://www.youtube.com{url}')
+            item.add_value('id', s.xpath('//*[@id="author-text"]/@href').get())
+            item.add_value('date', s.xpath('//*[@class="published-time-text above-comment style-scope ytd-comment-renderer"]/a/text()').get())
             item.add_value('name', self.clean(s.xpath('//*[@id="author-text"]/span/text()').get()))
             item.add_value('picture', s.xpath('//div[@id="author-thumbnail"]/a/yt-img-shadow/img/@src').get())
             item.add_value('content', s.xpath('//*[@id="content-text"]/text()').get())

@@ -60,15 +60,27 @@ class SeleniumMiddleware:
             self.driver.execute_script('videos = document.querySelectorAll("video"); for(video of videos) {video.pause(); video.controls = true}')
             self.driver.execute_script('document.getElementById("player").remove();')
 
-            last = -1
+            elements = -1
+            experimental = -1
+            scrolls = 0
 
-            while len(self.driver.find_elements_by_xpath(request.endless_scrolling)) != last:
-                new = self.driver.find_elements_by_xpath(request.endless_scrolling)
-                print(f"{len(new)} {last}")
+            while len(self.driver.find_elements_by_xpath(request.endless_scrolling)) != elements:
+                element = self.driver.find_elements_by_xpath(request.endless_scrolling)
+
+                if request.experimental and scrolls >= 3:
+                    experimental_element = self.driver.find_elements_by_xpath(request.experimental)
+
+                    if experimental > len(element) / 1.5:
+                        break
+
+                    experimental = len(experimental_element)
+
+                print(f"{len(element)}/{elements} [{experimental}]")
 
                 self.driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
+                scrolls += 1
                 time.sleep(1.6)
-                last = len(new)
+                elements = len(element)
             else:
                 if request.endless_scrolling == '//*[@id="content-text"]':
                     self.driver.execute_script('buttons = document.getElementsByClassName("more-button-exp style-scope ytd-comment-replies-renderer"); for(button of buttons) {button.click();}');
